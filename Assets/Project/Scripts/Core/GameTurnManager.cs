@@ -118,11 +118,32 @@ namespace EcoSurvive.Core
             CurrentDay++;
             CurrentActionPoints = maxActionPoints;
 
+            Debug.Log($"<color=green>[GameTurnManager] ¡Día {CurrentDay} iniciado! PA restablecidos a: {CurrentActionPoints}/{maxActionPoints}</color>");
+
             OnDayChanged?.Invoke(CurrentDay);
             OnActionPointsChanged?.Invoke(CurrentActionPoints, maxActionPoints);
 
             IsProcessingTurn = false;
             OnTurnProcessingCompleted?.Invoke();
         }
+
+        [ContextMenu("Depuración: Gastar 1 PA")]
+        public void DebugSpendOnePoint()
+        {
+            TrySpendActionPoints(1);
+            Debug.Log($"[GameTurnManager] PA gastado. Restantes: {CurrentActionPoints}/{maxActionPoints}");
+        }
+
+        private void Update()
+        {
+            // Detección con el nuevo Input System de Unity
+            if (UnityEngine.InputSystem.Keyboard.current != null &&
+                UnityEngine.InputSystem.Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                DebugSpendOnePoint();
+            }
+        }
     }
 }
+
+
