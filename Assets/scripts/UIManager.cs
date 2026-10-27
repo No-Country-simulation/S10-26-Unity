@@ -5,16 +5,13 @@ public class UIManager : MonoBehaviour
 {
     public GameObject pauseMenu;
 
-    public UIManager()
-    {
-    }
-
     public void onEnterPausePress() {
         pauseMenu.SetActive(true);
+        Time.timeScale = 0f; // detiene el juego
     }
-
-    public void onExitPausePress() {
+        public void onResumePress() {
         pauseMenu.SetActive(false);
+        Time.timeScale = 1f; // reanuda el juego
     }
 
     public void onGameExitPress() {
